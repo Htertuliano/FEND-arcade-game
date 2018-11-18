@@ -1,41 +1,28 @@
-// Enemies our player must avoid
-
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-	class Enemy {
-			constructor() {
-				this.speed = 200;
+var Enemy = function(x,y,speed) {
+				this.x = x;
+				this.y = y + 55;
+				this.speed = speed;
 				this.step = 101;
 				this.boundary = this.step * 5;		
-				this.positionReset = -this.step;	
-				this.x = 0;
-				this.y = 55;	
+				this.resetPos = -this.step;		
 				this.sprite = 'images/enemy-bug.png';
 
 			}
 
-		render() {
+		Enemy.prototype.render = function() {
 				ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-		}
+		};
 
-		update(dt) {
+		Enemy.prototype.update = function(dt) {
 				if ( this.x < this.boundary ) {
 						this.x += (this.speed * dt);
 				}
 				else {
-						this.x = this.positionReset;
+						this.x = this.resetPos;
 				}
 		}
 
-	}
-
-
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
-
+	
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
@@ -58,26 +45,28 @@
 			/** update function updates location based on 
 			* input 
 			*/
-			update() {	
-					for (let enemy of allEnemies) {
-					if ( (this.y === enemy.y) && ( (enemy.x + enemy.step/2)  > this.x ) && ( enemy.x < (this.x + this.step/2) ) ) {
-							this.reset();
+				reset() {
+					this.x = this.startX;
+					this.y = this.startY;
+			}
+          	 
+			update() {	for (let enemy of allEnemies) {
+						if ( ( this.x < (enemy.x + 50) ) && (this.x > (enemy.x - 50) ) ) {
+								this.reset();
+					}
+				
+					if ( this.y === 55 ) {
+						this.victory = true;
 						}
-					}
-
-					if (this.y === 55) {
-							this.victory = true;
-					}
-
-
-
+				console.log(this.x, enemy.x, enemy.y, this.y);}
+					
 			}
 			handleInput(direction) {
 				switch (direction) {
 						case 'left':
 								if (this.x > 0) {
 								this.x -= this.step;
-				}
+								}
 								break;
 						case 'right':
 								if (this.x < (this.step * 4)) {
@@ -94,21 +83,16 @@
 								this.y += this.jump;
 								}
 								break;
-			}
+				}
 			}
 
-			reset() {
-
-					this.x = this.startX;
-					this.y = this.startY;
-			}
 	}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 	const player = new Player();
-    const bug1 = new Enemy();
+    const bug1 = new Enemy(-101,55,100);
 	const allEnemies = [];
 	allEnemies.push(bug1);
 
