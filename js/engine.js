@@ -56,7 +56,7 @@ var Engine = (function(global) {
          * function again as soon as the browser is able to draw another frame.
          */
 		if ( player.victory === true ) {
-                setTimeout(function() {	win.cancelAnimationFrame(id); alert('Game Over');}, 500);
+                setTimeout(function() {	win.cancelAnimationFrame(id); alert('You Won! Yay!');}, 500);
 		}
 		else { 
 			id = win.requestAnimationFrame(main);
@@ -116,7 +116,7 @@ var Engine = (function(global) {
         var rowImages = [
                 'images/water-block.png',   // Top row is water
                 'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
+                'images/water-block.png',   // Row 2 of 3 of stone
                 'images/stone-block.png',   // Row 3 of 3 of stone
                 'images/grass-block.png',   // Row 1 of 2 of grass
                 'images/grass-block.png'    // Row 2 of 2 of grass
